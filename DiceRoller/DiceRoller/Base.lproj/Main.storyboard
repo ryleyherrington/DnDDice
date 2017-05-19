@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="NhQ-zS-TUs">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--FATE ROLLER-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DiceRoller" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake to roll!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaT-wI-VLV">
+                                <rect key="frame" x="16" y="574" width="343" height="21"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A9m-rj-1jF">
+                                <rect key="frame" x="183" y="329" width="8" height="8"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YPO-qW-Bu1">
+                                <rect key="frame" x="183" y="329" width="8" height="8"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2xr-Zx-KDb">
+                                <rect key="frame" x="74" y="8" width="227" height="29"/>
+                                <segments>
+                                    <segment title="4"/>
+                                    <segment title="6"/>
+                                    <segment title="8"/>
+                                    <segment title="10"/>
+                                    <segment title="20"/>
+                                    <segment title="100"/>
+                                </segments>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="segControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="iuV-aC-1cg"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOK-z9-4ok">
+                                <rect key="frame" x="150" y="264" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="dRA-3n-vsd"/>
+                                    <constraint firstAttribute="height" constant="75" id="s7y-IA-SB6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="25"/>
+                                <state key="normal" title="d20">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="diceButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tse-sg-o3d"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.21941190958023071" green="0.44533878564834595" blue="0.70688563585281372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="2xr-Zx-KDb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="1oF-nD-a2a"/>
+                            <constraint firstItem="lOK-z9-4ok" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CGs-qH-wgh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JaT-wI-VLV" secondAttribute="bottom" constant="8" id="DpO-9z-O9f"/>
+                            <constraint firstItem="2xr-Zx-KDb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FLp-kS-P1r"/>
+                            <constraint firstItem="lOK-z9-4ok" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="VtT-o3-dJQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JaT-wI-VLV" secondAttribute="trailing" id="ZDx-SO-iK0"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="JaT-wI-VLV" secondAttribute="leading" id="ccR-8c-LzF"/>
+                            <constraint firstItem="JaT-wI-VLV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xJM-Gn-f1l"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="9As-aR-ZiZ" appends="YES" id="gNx-Ed-6AZ"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" title="FATE ROLLER" id="iCQ-fo-Egf"/>
+                    <connections>
+                        <outlet property="blueSquare" destination="YPO-qW-Bu1" id="bZ8-Iz-tSz"/>
+                        <outlet property="bottomMessage" destination="JaT-wI-VLV" id="a0u-ZS-JzH"/>
+                        <outlet property="diceButton" destination="lOK-z9-4ok" id="hE5-H0-3V1"/>
+                        <outlet property="redSquare" destination="A9m-rj-1jF" id="ike-SA-zZ1"/>
+                        <outlet property="segControl" destination="2xr-Zx-KDb" id="b1s-wJ-SCA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="9As-aR-ZiZ">
+                    <connections>
+                        <action selector="pannedWithSender:" destination="BYZ-38-t0r" id="ohm-ZZ-WgZ"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="925.60000000000002" y="790.25487256371821"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Vky-0P-R6O">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NhQ-zS-TUs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Y1Q-np-Lna">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.21941190960000001" green="0.44533878560000001" blue="0.70688563589999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="IaE-hS-X5y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u7m-fX-UiS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="791.15442278860576"/>
+        </scene>
+    </scenes>
+</document>
