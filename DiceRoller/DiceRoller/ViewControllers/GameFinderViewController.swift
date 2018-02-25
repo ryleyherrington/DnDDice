@@ -41,11 +41,30 @@ class GameFinderViewController: UIViewController {
         return b
     }()
     
+    fileprivate var coordinator: EventCoordinator<TimelineEvent, TimelineState>?
+    typealias Dependencies = String //in case we need more later, just send in a tuple (String, String, Int...)
+    static func create() -> GameFinderViewController {
+        let vc = GameFinderViewController()
+        
+        let initialState = TimelineState()
+        let coordinator = EventCoordinator(eventHandler: TimelineHandler(), state: initialState)
+        vc.coordinator = coordinator
+        coordinator.onStateChange = { [weak vc] state in vc?.updateState(state: state) }
+        
+        return vc
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let initialState = TimelineState()
+        let coordinator = EventCoordinator(eventHandler: TimelineHandler(), state: initialState)
+        self.coordinator = coordinator
+        coordinator.onStateChange = { [weak self] state in self?.updateState(state: state) }
+
         setupView()
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -86,8 +105,65 @@ class GameFinderViewController: UIViewController {
         }
     }
     
+    func updateState(state: TimelineState) {
+        performService(state: state)
+        performNavigation(state: state)
+        handleError(state.error)
+    }
+    
+    func performService(state: TimelineState) {
+        guard let service = state.service else { return }
+        
+        switch service {
+        case .checkTimelineExist:
+            guard let timelineName = state.timelineName else { return }
+            checkTimelineExistence(timelineName: timelineName, completion: { [weak self] doesExist in
+                if doesExist == true {
+                    self?.coordinator?.notify(event: .timelineExists)
+                } else {
+                    self?.coordinator?.notify(event: .timelineNotExists)
+                }
+            })
+            
+        default: break
+            
+        }
+    }
+    
+
+    func performNavigation(state: TimelineState) {
+        guard let navigationState = state.navigation else { return }
+        switch navigationState {
+        case .history:
+            guard let timelineName = state.timelineName else { return }
+            navigationController?.pushViewController(HistoryViewController.create(deps: timelineName), animated: true)
+            
+        case .setupGame:
+            print("setupgame")
+        }
+    }
+    
+    func handleError(_ error: TimelineError?) {
+        guard let error = error else { return }
+        
+        switch error {
+        case .gameNotFound:
+            let alert = UIAlertController(title: "Uh Oh", message: "Game not found, do you want to create one?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { [weak self] _ in
+                self?.coordinator?.notify(event: .createTimeline)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
+            self.navigationController?.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     @objc func findGame() {
-        navigationController?.pushViewController(HistoryViewController(), animated: true)
+        guard let timelineName = textField.text  else { return }
+        coordinator?.notify(event: .timelineChosen(timelineName))
+    }
+
+    func checkTimelineExistence(timelineName: String, completion: (Bool) -> Void ) {
+        completion(true)
     }
 
 }
