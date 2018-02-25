@@ -7,14 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73947E7220421DDD00906C79 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73947E7120421DDD00906C79 /* EventCell.swift */; };
+		73947E7520427FF300906C79 /* GameFinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73947E7420427FF300906C79 /* GameFinderViewController.swift */; };
+		739AA8B51ED211EA00090CCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 739AA8B41ED211EA00090CCA /* GoogleService-Info.plist */; };
+		73B4AB682041CD34009F4260 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B4AB672041CD34009F4260 /* HistoryViewController.swift */; };
 		73E1CB531DF7C4CC002FD444 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E1CB521DF7C4CC002FD444 /* AppDelegate.swift */; };
 		73E1CB551DF7C4CC002FD444 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E1CB541DF7C4CC002FD444 /* ViewController.swift */; };
 		73E1CB581DF7C4CC002FD444 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E1CB561DF7C4CC002FD444 /* Main.storyboard */; };
 		73E1CB5A1DF7C4CC002FD444 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73E1CB591DF7C4CC002FD444 /* Assets.xcassets */; };
 		73E1CB5D1DF7C4CC002FD444 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E1CB5B1DF7C4CC002FD444 /* LaunchScreen.storyboard */; };
+		C774BB6861786A668273F204 /* Pods_DiceRoller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7009849DB7F5978B3AB6A2 /* Pods_DiceRoller.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1239DA3BF841E2579D59621C /* Pods-DiceRoller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiceRoller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller.debug.xcconfig"; sourceTree = "<group>"; };
+		73947E7120421DDD00906C79 /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		73947E7420427FF300906C79 /* GameFinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFinderViewController.swift; sourceTree = "<group>"; };
+		739AA8B41ED211EA00090CCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		73B4AB672041CD34009F4260 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		73E1CB4F1DF7C4CC002FD444 /* DiceRoller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiceRoller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E1CB521DF7C4CC002FD444 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73E1CB541DF7C4CC002FD444 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +32,8 @@
 		73E1CB591DF7C4CC002FD444 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73E1CB5C1DF7C4CC002FD444 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		73E1CB5E1DF7C4CC002FD444 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		823BFADAD3B9351955B3261C /* Pods-DiceRoller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiceRoller.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller.release.xcconfig"; sourceTree = "<group>"; };
+		BB7009849DB7F5978B3AB6A2 /* Pods_DiceRoller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiceRoller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +41,53 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C774BB6861786A668273F204 /* Pods_DiceRoller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		404846133E9A917E70C935A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BB7009849DB7F5978B3AB6A2 /* Pods_DiceRoller.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73947E6F2041CEF900906C79 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				73E1CB541DF7C4CC002FD444 /* ViewController.swift */,
+				73B4AB672041CD34009F4260 /* HistoryViewController.swift */,
+				73947E7420427FF300906C79 /* GameFinderViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		73947E702041CF0B00906C79 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
+		73947E7320421DE500906C79 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				73947E7120421DDD00906C79 /* EventCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		73E1CB461DF7C4CC002FD444 = {
 			isa = PBXGroup;
 			children = (
 				73E1CB511DF7C4CC002FD444 /* DiceRoller */,
 				73E1CB501DF7C4CC002FD444 /* Products */,
+				C567BFC0AE8B5946FB3A1C0B /* Pods */,
+				404846133E9A917E70C935A3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +102,26 @@
 		73E1CB511DF7C4CC002FD444 /* DiceRoller */ = {
 			isa = PBXGroup;
 			children = (
+				73947E7320421DE500906C79 /* Views */,
+				73947E702041CF0B00906C79 /* Handlers */,
+				73947E6F2041CEF900906C79 /* ViewControllers */,
 				73E1CB521DF7C4CC002FD444 /* AppDelegate.swift */,
-				73E1CB541DF7C4CC002FD444 /* ViewController.swift */,
 				73E1CB561DF7C4CC002FD444 /* Main.storyboard */,
 				73E1CB591DF7C4CC002FD444 /* Assets.xcassets */,
 				73E1CB5B1DF7C4CC002FD444 /* LaunchScreen.storyboard */,
 				73E1CB5E1DF7C4CC002FD444 /* Info.plist */,
+				739AA8B41ED211EA00090CCA /* GoogleService-Info.plist */,
 			);
 			path = DiceRoller;
+			sourceTree = "<group>";
+		};
+		C567BFC0AE8B5946FB3A1C0B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1239DA3BF841E2579D59621C /* Pods-DiceRoller.debug.xcconfig */,
+				823BFADAD3B9351955B3261C /* Pods-DiceRoller.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +131,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 73E1CB611DF7C4CC002FD444 /* Build configuration list for PBXNativeTarget "DiceRoller" */;
 			buildPhases = (
+				400C8D29D0CC849B9DDDBDF6 /* [CP] Check Pods Manifest.lock */,
 				73E1CB4B1DF7C4CC002FD444 /* Sources */,
 				73E1CB4C1DF7C4CC002FD444 /* Frameworks */,
 				73E1CB4D1DF7C4CC002FD444 /* Resources */,
+				30657EB675C47533529F65BC /* [CP] Embed Pods Frameworks */,
+				C213F77F356928E5F258932F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -91,7 +154,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Herrington;
 				TargetAttributes = {
 					73E1CB4E1DF7C4CC002FD444 = {
@@ -124,6 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				739AA8B51ED211EA00090CCA /* GoogleService-Info.plist in Resources */,
 				73E1CB5D1DF7C4CC002FD444 /* LaunchScreen.storyboard in Resources */,
 				73E1CB5A1DF7C4CC002FD444 /* Assets.xcassets in Resources */,
 				73E1CB581DF7C4CC002FD444 /* Main.storyboard in Resources */,
@@ -132,13 +196,72 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		30657EB675C47533529F65BC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		400C8D29D0CC849B9DDDBDF6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DiceRoller-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C213F77F356928E5F258932F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		73E1CB4B1DF7C4CC002FD444 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73947E7220421DDD00906C79 /* EventCell.swift in Sources */,
+				73B4AB682041CD34009F4260 /* HistoryViewController.swift in Sources */,
 				73E1CB551DF7C4CC002FD444 /* ViewController.swift in Sources */,
 				73E1CB531DF7C4CC002FD444 /* AppDelegate.swift in Sources */,
+				73947E7520427FF300906C79 /* GameFinderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +296,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -181,7 +306,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -222,7 +352,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -230,7 +362,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -257,6 +394,7 @@
 		};
 		73E1CB621DF7C4CC002FD444 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1239DA3BF841E2579D59621C /* Pods-DiceRoller.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 574WJ7QENW;
@@ -264,12 +402,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herrington.DiceRoller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		73E1CB631DF7C4CC002FD444 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 823BFADAD3B9351955B3261C /* Pods-DiceRoller.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 574WJ7QENW;
@@ -277,7 +416,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herrington.DiceRoller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -300,6 +439,7 @@
 				73E1CB631DF7C4CC002FD444 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

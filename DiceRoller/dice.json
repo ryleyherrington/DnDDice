@@ -1,0 +1,30 @@
+{
+  "rooms": [
+    {
+      "name": "dnd1",
+      "people": [
+        {
+          "name": "ryley",
+          "recentRoll": "11"
+        },
+        {
+          "name": "aimee",
+          "recentRoll": "19"
+        }
+      ]
+    },
+    {
+      "name": "dnd2",
+      "people": [
+        {
+          "name": "will",
+          "recentRoll": "5"
+        },
+        {
+          "name": "jon",
+          "recentRoll": "8"
+        }
+      ]
+    }
+  ]
+}

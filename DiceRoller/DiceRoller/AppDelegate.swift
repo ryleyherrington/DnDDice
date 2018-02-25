@@ -7,17 +7,19 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "Helvetica-Bold", size: 18)!,
-                                                            NSForegroundColorAttributeName: UIColor.white]
+
+        FIRApp.configure()
+
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 18)!,
+                                                            NSAttributedStringKey.foregroundColor: UIColor.init(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0) ]
         
         return true
     }

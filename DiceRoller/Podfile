@@ -1,0 +1,10 @@
+platform :ios, '10.0'
+use_frameworks!
+
+target 'DiceRoller' do
+
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
+  pod 'SnapKit'
+
+end
