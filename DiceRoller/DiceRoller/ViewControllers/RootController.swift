@@ -18,13 +18,13 @@ class RootController: UITabBarController {
         let gameVC = GameFinderViewController()
         gameVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         let gameNavController = UINavigationController(rootViewController: gameVC)
-        gameNavController.title = "Timeline"
+        gameNavController.navigationItem.title = "Timeline"
 
         //Dice portion
         let diceVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DiceVC") 
         diceVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
         let diceNavController = UINavigationController(rootViewController: diceVC)
-        diceNavController.title = "Fate Roller"
+        diceNavController.navigationItem.title = "Fate Roller"
 
         //Tab bar controllers
         self.viewControllers = [gameNavController, diceNavController]

@@ -11,7 +11,6 @@ import SnapKit
 
 class EventCell: UITableViewCell {
     
-    
     var event: Event? {
         didSet {
             updateCell()

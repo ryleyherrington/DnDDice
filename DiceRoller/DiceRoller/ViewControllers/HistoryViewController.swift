@@ -54,15 +54,15 @@ class HistoryViewController: UIViewController {
         super.viewDidLoad()
         
         ref = FIRDatabase.database().reference()
-        
+        self.title = "History"
+
         setupView()
     }
     
     func setupView() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEvent))
-        tabBarController?.navigationController?.navigationItem.setRightBarButton(addButton, animated: true)
-        
-        
+        navigationItem.setRightBarButton(addButton, animated: true)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
@@ -101,12 +101,8 @@ class HistoryViewController: UIViewController {
     func performNavigation(state: TimelineState) {
         guard let navigationState = state.navigation else { return }
         switch navigationState {
-        case .history:
-            guard let timelineName = state.timelineName else { return }
-            navigationController?.pushViewController(HistoryViewController.create(deps: timelineName), animated: true)
-            
-        case .setupGame:
-            print("setupgame")
+        case .history, .setupGame:
+            break
         }
     }
     
@@ -127,9 +123,8 @@ class HistoryViewController: UIViewController {
         }
     }
     
-    
     @objc func addEvent() {
-        
+        print("Add")
     }
     
     func getHistory(timelineName: String) {

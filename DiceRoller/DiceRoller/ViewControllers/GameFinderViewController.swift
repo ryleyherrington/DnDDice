@@ -67,8 +67,8 @@ class GameFinderViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.tabBarController?.navigationItem.title = "Timeline"
+
+        self.title = "Timeline"
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,8 +76,6 @@ class GameFinderViewController: UIViewController {
     }
     
     func setupView() {
-        self.navigationController?.title = "Timeline"
-        
         view.addSubview(descLabel)
         view.addSubview(textField)
         view.addSubview(findButton)
@@ -163,7 +161,6 @@ class GameFinderViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler:nil))
                 
             self.navigationController?.present(alert, animated: true, completion: nil)
-
         }
     }
     

@@ -20,9 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 18)!,
                                                             NSAttributedStringKey.foregroundColor: UIColor.init(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0) ]
-        
+        UINavigationBar.appearance().tintColor = UIColor.init(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0) 
+
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: RootController())
+        window?.rootViewController = RootController()
         window?.makeKeyAndVisible()
         
         return true
