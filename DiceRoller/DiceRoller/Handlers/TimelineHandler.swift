@@ -31,6 +31,7 @@ enum TimelineEvent {
 
 enum TimelineError {
     case gameNotFound
+    case emptyTimelineName
 }
 
 enum TimelineNavigation {
@@ -68,9 +69,13 @@ struct TimelineHandler: EventHandler {
         
         switch event {
         case let .timelineChosen(name):
-            state.timelineName = name
-            state.service = .checkTimelineExist
-        
+            if name.isEmpty {
+                state.error = .emptyTimelineName
+            } else {
+                state.timelineName = name
+                state.service = .checkTimelineExist
+            }
+            
         case .timelineExists:
             state.navigation = .history
         

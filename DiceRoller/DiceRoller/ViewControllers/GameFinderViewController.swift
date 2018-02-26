@@ -65,13 +65,18 @@ class GameFinderViewController: UIViewController {
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tabBarController?.navigationItem.title = "Timeline"
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     func setupView() {
-        self.title = "Timeline"
+        self.navigationController?.title = "Timeline"
         
         view.addSubview(descLabel)
         view.addSubview(textField)
@@ -129,7 +134,6 @@ class GameFinderViewController: UIViewController {
             
         }
     }
-    
 
     func performNavigation(state: TimelineState) {
         guard let navigationState = state.navigation else { return }
@@ -154,6 +158,12 @@ class GameFinderViewController: UIViewController {
             }))
             alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
             self.navigationController?.present(alert, animated: true, completion: nil)
+        case .emptyTimelineName:
+            let alert = UIAlertController(title: "Uh Oh", message: "You can't find an empty game!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler:nil))
+                
+            self.navigationController?.present(alert, animated: true, completion: nil)
+
         }
     }
     

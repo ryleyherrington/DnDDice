@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DiceViewController.swift
 //  DiceRoller
 //
 //  Created by Ryley Herrington on 12/6/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class DiceViewController: UIViewController {
 
     @IBOutlet weak var segControl: UISegmentedControl!
     @IBOutlet weak var diceButton: UIButton!
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        
         self.segControl.selectedSegmentIndex = 4
         self.becomeFirstResponder()
         
@@ -127,7 +127,14 @@ class ViewController: UIViewController {
         })
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tabBarController?.navigationItem.title = "Fate Roller"
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.updateMessage(text: "Shake to roll!", duration: 1.5, dismissDelay: 8)
     }
     

@@ -11,6 +11,7 @@ import SnapKit
 
 class EventCell: UITableViewCell {
     
+    
     var event: Event? {
         didSet {
             updateCell()
@@ -87,10 +88,7 @@ class EventCell: UITableViewCell {
         } else {
             tableView.isHidden = true
         }
-//        tableView.sizeToFit()
-//        layoutSubviews()
     }
-
 }
 extension EventCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

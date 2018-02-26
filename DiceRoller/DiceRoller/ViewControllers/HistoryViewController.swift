@@ -60,9 +60,8 @@ class HistoryViewController: UIViewController {
     
     func setupView() {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEvent))
-        self.navigationController?.navigationItem.setRightBarButton(addButton, animated: true)
+        tabBarController?.navigationController?.navigationItem.setRightBarButton(addButton, animated: true)
         
-        self.title = name
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -122,6 +121,9 @@ class HistoryViewController: UIViewController {
             }))
             alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
             self.navigationController?.present(alert, animated: true, completion: nil)
+            
+        case .emptyTimelineName:
+            break
         }
     }
     
@@ -162,8 +164,8 @@ class HistoryViewController: UIViewController {
 
 extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let event = history[indexPath.row]
-//        print("Sub events =  \(event.subEvents)")
+        let event = history[indexPath.row]
+        print("Sub events =  \(event.subEvents)")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
