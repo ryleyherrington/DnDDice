@@ -13,10 +13,10 @@ import FirebaseDatabase
 
 struct Event {
     var name: String
-    var subEvents: [SubEvents]
+    var subEvents: [SubEvent]
 }
 
-struct SubEvents {
+struct SubEvent {
     var desc: String
 }
 
@@ -103,6 +103,9 @@ class HistoryViewController: UIViewController {
         switch navigationState {
         case .history, .setupGame:
             break
+
+        case let .setupNewEvent(section):
+            print("New event added after sectino: \(section)")
         }
     }
     
@@ -110,15 +113,7 @@ class HistoryViewController: UIViewController {
         guard let error = error else { return }
         
         switch error {
-        case .gameNotFound:
-            let alert = UIAlertController(title: "Uh Oh", message: "Game not found, do you want to create one?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { [weak self] _ in
-                self?.coordinator?.notify(event: .createTimeline)
-            }))
-            alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
-            self.navigationController?.present(alert, animated: true, completion: nil)
-            
-        case .emptyTimelineName:
+        case .gameNotFound, .emptyTimelineName:
             break
         }
     }
@@ -140,7 +135,7 @@ class HistoryViewController: UIViewController {
                 if let events = value?["SubEvents"] as? NSArray {
                     for i in 0..<events.count {
                         let subDesc = events[i] as? String ?? ""
-                        newEvent.subEvents.append(SubEvents(desc: subDesc))
+                        newEvent.subEvents.append(SubEvent(desc: subDesc))
                     }
                 }
                 
@@ -154,17 +149,21 @@ class HistoryViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+
+    @objc func tappedSection(_ sender:UIButton) {
+        coordinator?.notify(event: .addingEvent(sender.tag))
+    }
     
 }
 
 extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let event = history[indexPath.row]
-        print("Sub events =  \(event.subEvents)")
+        let event = history[indexPath.section].subEvents[indexPath.row]
+        print(event)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return history.count
+        return history[section].subEvents.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -172,20 +171,56 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return history.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventCell
-        cell.event = history[indexPath.row]
+        cell.event = history[indexPath.section].subEvents[indexPath.row]
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return history[safe: section] != nil ? 44.0: 0.0
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let event = history[safe: section] {
+            let header = UIStackView(frame: CGRect(x: 15, y:0, width: view.frame.size.width, height:44))
+            header.distribution = .fill
+            header.axis = .horizontal
+            header.alignment = .trailing
+
+            let title  = UILabel(frame: .zero)
+            title.numberOfLines = 0
+            title.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+            title.textAlignment = .left
+            title.text = event.name
+
+            let addButton = UIButton(type: .contactAdd)
+            addButton.tag = section
+            addButton.tintColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
+            addButton.addTarget(self, action: #selector(tappedSection(_:)), for: .touchUpInside)
+
+            header.addArrangedSubview(title)
+            header.addArrangedSubview(addButton)
+
+            return header
+        }
+
+        return UIView(frame: .zero)
+    }
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1.0
+        return 44.0
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let addButton = UIButton(type: .contactAdd)
+        addButton.tag = section
+        addButton.titleLabel?.text = "Add Event"
+        addButton.tintColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
+        addButton.addTarget(self, action: #selector(insertEvent(_:)), for: .touchUpInside)
         return UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 1) )
     }
 }

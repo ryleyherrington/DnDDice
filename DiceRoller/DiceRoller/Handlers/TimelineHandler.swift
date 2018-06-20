@@ -21,7 +21,8 @@ enum TimelineEvent {
     case timelineChosen(String)
     case timelineExists
     case timelineNotExists
-    case createTimeline
+    case createTimeline(String)
+    case addingEvent(Int)
     case getHistory
     case addEvent(String, Int)
     case addSubEvent(String, Int, Int)
@@ -36,7 +37,8 @@ enum TimelineError {
 
 enum TimelineNavigation {
     case history
-    case setupGame
+    case setupGame(String)
+    case setupNewEvent(Int)
 }
 
 struct TimelineState {
@@ -82,8 +84,11 @@ struct TimelineHandler: EventHandler {
         case .timelineNotExists:
             state.error = .gameNotFound
         
-        case .createTimeline:
-            state.navigation = .setupGame
+        case let .createTimeline(timelineName):
+            state.navigation = .setupGame(timelineName)
+
+        case let .addingEvent(eventNumber):
+            state.navigation = .setupNewEvent(eventNumber)
             
         case .getHistory:
             state.service = .getHistory

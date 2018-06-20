@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		409811BE20D9C02B00532258 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409811BD20D9C02B00532258 /* Extensions.swift */; };
 		7353EA4520432C510050865A /* EventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353EA4420432C510050865A /* EventCoordinator.swift */; };
 		7353EA4720432CB40050865A /* TimelineHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353EA4620432CB40050865A /* TimelineHandler.swift */; };
 		7353EA49204384DD0050865A /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353EA48204384DD0050865A /* RootController.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		1239DA3BF841E2579D59621C /* Pods-DiceRoller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiceRoller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller.debug.xcconfig"; sourceTree = "<group>"; };
+		409811BD20D9C02B00532258 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7353EA4420432C510050865A /* EventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCoordinator.swift; sourceTree = "<group>"; };
 		7353EA4620432CB40050865A /* TimelineHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineHandler.swift; sourceTree = "<group>"; };
 		7353EA48204384DD0050865A /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				73E1CB5B1DF7C4CC002FD444 /* LaunchScreen.storyboard */,
 				73E1CB5E1DF7C4CC002FD444 /* Info.plist */,
 				739AA8B41ED211EA00090CCA /* GoogleService-Info.plist */,
+				409811BD20D9C02B00532258 /* Extensions.swift */,
 			);
 			path = DiceRoller;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73947E7220421DDD00906C79 /* EventCell.swift in Sources */,
+				409811BE20D9C02B00532258 /* Extensions.swift in Sources */,
 				73B4AB682041CD34009F4260 /* HistoryViewController.swift in Sources */,
 				7353EA4720432CB40050865A /* TimelineHandler.swift in Sources */,
 				73E1CB551DF7C4CC002FD444 /* DiceViewController.swift in Sources */,

@@ -40,7 +40,7 @@ class GameFinderViewController: UIViewController {
         b.clipsToBounds = true
         return b
     }()
-    
+
     fileprivate var coordinator: EventCoordinator<TimelineEvent, TimelineState>?
     typealias Dependencies = String //in case we need more later, just send in a tuple (String, String, Int...)
     static func create() -> GameFinderViewController {
@@ -82,13 +82,12 @@ class GameFinderViewController: UIViewController {
 
         findButton.setTitle("Find Game", for: .normal)
         findButton.addTarget(self, action: #selector(findGame), for: .touchUpInside)
-        
+
         textField.placeholder = "Enter game name"
-        
         descLabel.text = "Enter the name of the game your group is using already, or create a new one. "
         
         descLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(84)
+            make.top.equalToSuperview().offset(90)
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
         }
@@ -140,8 +139,11 @@ class GameFinderViewController: UIViewController {
             guard let timelineName = state.timelineName else { return }
             navigationController?.pushViewController(HistoryViewController.create(deps: timelineName), animated: true)
             
-        case .setupGame:
-            print("setupgame")
+        case let .setupGame(name):
+            print("setupgame with name: \(name)")
+
+        case .setupNewEvent(_):
+            break
         }
     }
     
@@ -152,7 +154,8 @@ class GameFinderViewController: UIViewController {
         case .gameNotFound:
             let alert = UIAlertController(title: "Uh Oh", message: "Game not found, do you want to create one?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { [weak self] _ in
-                self?.coordinator?.notify(event: .createTimeline)
+                guard let timelineName = self?.textField.text  else { return }
+                self?.coordinator?.notify(event: .createTimeline(timelineName))
             }))
             alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
             self.navigationController?.present(alert, animated: true, completion: nil)
