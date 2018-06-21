@@ -106,6 +106,8 @@ class HistoryViewController: UIViewController {
 
         case let .setupNewEvent(section):
             print("New event added after sectino: \(section)")
+        case let .insertEvent(section):
+            let vc = AddEventViewController.create(insertEventAt: section, history: history, timelineName: self.timeline)
         }
     }
     
@@ -151,7 +153,11 @@ class HistoryViewController: UIViewController {
     }
 
     @objc func tappedSection(_ sender:UIButton) {
-        coordinator?.notify(event: .addingEvent(sender.tag))
+        coordinator?.notify(event: .addNewSubEvent(sender.tag))
+    }
+
+    @objc func insertEvent(_ sender: UIButton) {
+        coordinator?.notify(event: .insertEvent(sender.tag))
     }
     
 }
@@ -216,11 +222,12 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let addButton = UIButton(type: .contactAdd)
+        let addButton = UIButton(type: .custom)
         addButton.tag = section
         addButton.titleLabel?.text = "Add Event"
         addButton.tintColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
         addButton.addTarget(self, action: #selector(insertEvent(_:)), for: .touchUpInside)
-        return UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 1) )
+
+        return addButton
     }
 }

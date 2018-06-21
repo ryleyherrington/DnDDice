@@ -142,7 +142,7 @@ class GameFinderViewController: UIViewController {
         case let .setupGame(name):
             print("setupgame with name: \(name)")
 
-        case .setupNewEvent(_):
+        case .setupNewEvent(_), .insertEvent(_):
             break
         }
     }
