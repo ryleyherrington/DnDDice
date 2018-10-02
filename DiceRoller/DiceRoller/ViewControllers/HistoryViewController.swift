@@ -27,12 +27,11 @@ class HistoryViewController: UIViewController {
     fileprivate var name: String?
     
     fileprivate var tableView:UITableView = {
-        let tv = UITableView(frame: .zero, style: .plain)
+        let tv = UITableView(frame: .zero, style: .grouped)
         tv.allowsSelection = true
         tv.estimatedRowHeight = 120
         return tv
     }()
-    
     
     fileprivate var coordinator: EventCoordinator<TimelineEvent, TimelineState>?
     typealias Dependencies = String //in case we need more later, just send in a tuple (String, String, Int...)
@@ -60,12 +59,10 @@ class HistoryViewController: UIViewController {
     }
     
     func setupView() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEvent))
-        navigationItem.setRightBarButton(addButton, animated: true)
-
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
+        tableView.backgroundColor = UIColor.groupTableViewBackground
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
@@ -105,9 +102,14 @@ class HistoryViewController: UIViewController {
             break
 
         case let .setupNewEvent(section):
-            print("New event added after sectino: \(section)")
+            print("New event added after section: \(section)")
+
         case let .insertEvent(section):
-            let vc = AddEventViewController.create(insertEventAt: section, history: history, timelineName: self.timeline)
+            print(section)
+            if let timelineName = name {
+                let vc = AddEventViewController.create(insertEventAt: section, history: history, timelineName: timelineName)
+                navigationController?.present(vc, animated: true, completion: nil)
+            }
         }
     }
     
@@ -187,29 +189,48 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return history[safe: section] != nil ? 44.0: 0.0
+        return history[safe: section] != nil ? UITableViewAutomaticDimension : 0.0
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let event = history[safe: section] {
-            let header = UIStackView(frame: CGRect(x: 15, y:0, width: view.frame.size.width, height:44))
-            header.distribution = .fill
+            let header = UIStackView()
+            header.distribution = .fillProportionally
             header.axis = .horizontal
-            header.alignment = .trailing
+            header.alignment = .fill
 
-            let title  = UILabel(frame: .zero)
+            let title = UILabel(frame: .zero)
             title.numberOfLines = 0
             title.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
             title.textAlignment = .left
-            title.text = event.name
+            title.text = "  " + event.name
+            title.textColor = UIColor.globalColor
+
+            let spacer = UIView(frame: .zero)
 
             let addButton = UIButton(type: .contactAdd)
             addButton.tag = section
-            addButton.tintColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
+            addButton.tintColor = UIColor.globalColor
             addButton.addTarget(self, action: #selector(tappedSection(_:)), for: .touchUpInside)
 
+            let trailing = UIView(frame: .zero)
+
             header.addArrangedSubview(title)
+            header.addArrangedSubview(spacer)
             header.addArrangedSubview(addButton)
+            header.addArrangedSubview(trailing)
+
+            title.snp.makeConstraints { (make) in
+                make.height.greaterThanOrEqualTo(40)
+            }
+
+            spacer.snp.makeConstraints { (make) in
+                make.width.greaterThanOrEqualTo(5)
+            }
+
+            trailing.snp.makeConstraints { (make) in
+                make.width.greaterThanOrEqualTo(5)
+            }
 
             return header
         }
@@ -218,16 +239,27 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 44.0
+        return 54.0
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 54) )
+        footer.backgroundColor = UIColor.groupTableViewBackground
+
         let addButton = UIButton(type: .custom)
         addButton.tag = section
-        addButton.titleLabel?.text = "Add Event"
-        addButton.tintColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
+        addButton.setTitle("Add Event", for: .normal)
+        addButton.setTitleColor(UIColor.globalColor, for: .normal)
         addButton.addTarget(self, action: #selector(insertEvent(_:)), for: .touchUpInside)
+        addButton.layer.cornerRadius = 4
+        addButton.clipsToBounds = true
 
-        return addButton
+        footer.addSubview(addButton)
+        addButton.snp.makeConstraints { (make) in
+            make.height.equalTo(44)
+            make.center.equalToSuperview()
+        }
+
+        return footer
     }
 }

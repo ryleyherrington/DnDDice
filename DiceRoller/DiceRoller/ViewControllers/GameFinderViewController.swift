@@ -11,7 +11,7 @@ import SnapKit
 
 class GameFinderViewController: UIViewController {
 
-    var descLabel: UILabel = {
+    private var descLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
@@ -21,7 +21,7 @@ class GameFinderViewController: UIViewController {
         return label
     }()
     
-    var textField: UITextField = {
+    private var textField: UITextField = {
         let tf = UITextField()
         tf.font = UIFont(name: "HelveticaNeue-Light", size: 14)
         tf.layer.borderColor = UIColor.lightGray.cgColor
@@ -32,7 +32,7 @@ class GameFinderViewController: UIViewController {
         return tf
     }()
     
-    var findButton: UIButton = {
+    private var findButton: UIButton = {
         let b = UIButton(type: .custom)
         b.backgroundColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
         b.titleLabel?.textColor = UIColor.white
@@ -95,7 +95,7 @@ class GameFinderViewController: UIViewController {
         textField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
-            make.center.equalToSuperview()
+            make.top.equalTo(descLabel.snp.bottom).offset(10)
             make.height.equalTo(44)
         }
         
@@ -159,6 +159,7 @@ class GameFinderViewController: UIViewController {
             }))
             alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
             self.navigationController?.present(alert, animated: true, completion: nil)
+
         case .emptyTimelineName:
             let alert = UIAlertController(title: "Uh Oh", message: "You can't find an empty game!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler:nil))
@@ -169,7 +170,8 @@ class GameFinderViewController: UIViewController {
     
     @objc func findGame() {
         guard let timelineName = textField.text  else { return }
-        coordinator?.notify(event: .timelineChosen(timelineName))
+        //TODO:RYLEY THIS IS ONLY FOR TESTING
+        coordinator?.notify(event: .timelineChosen("GameExample"))
     }
 
     func checkTimelineExistence(timelineName: String, completion: (Bool) -> Void ) {

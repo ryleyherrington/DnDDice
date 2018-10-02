@@ -10,10 +10,10 @@ PODS:
     - FirebaseInstanceID (~> 1.0)
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseCore (3.4.6):
     - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseDatabase (3.1.1):
     - FirebaseAnalytics (~> 3.5)
   - FirebaseInstanceID (1.0.8)
@@ -21,7 +21,7 @@ PODS:
     - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
   - GoogleToolboxForMac/Defines (2.1.0)
-  - GoogleToolboxForMac/NSData+zlib (2.1.0):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.0)":
     - GoogleToolboxForMac/Defines (= 2.1.0)
   - SnapKit (4.0.0)
 
@@ -29,6 +29,18 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - SnapKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseDatabase
+    - FirebaseInstanceID
+    - GoogleInterchangeUtilities
+    - GoogleSymbolUtilities
+    - GoogleToolboxForMac
+    - SnapKit
 
 SPEC CHECKSUMS:
   Firebase: b8134e285eb33201115bc688bc5d7f112923bc1f
@@ -41,6 +53,6 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: ea6abd35e8ae56e6af56fa3b6ede5d73cfcf53cf
+PODFILE CHECKSUM: 2a30527c26982ab96e79af62965d44a945978018
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

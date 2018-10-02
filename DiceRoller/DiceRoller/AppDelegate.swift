@@ -18,9 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FIRApp.configure()
 
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 18)!,
-                                                            NSAttributedStringKey.foregroundColor: UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0) ]
-        UINavigationBar.appearance().tintColor = UIColor.init(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0) 
+        //Navigation Bar Appearance
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedStringKey.font: UIFont(name: "Helvetica-Bold", size: 18)!,
+            NSAttributedStringKey.foregroundColor: UIColor.globalColor]
+        UINavigationBar.appearance().tintColor = UIColor.globalColor
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = RootController()

@@ -50,7 +50,9 @@ class EventCell: UITableViewCell {
     }
 
     func updateCell() {
-        titleLabel.text = event?.desc
+        if let event = event {
+           titleLabel.text = "  " + event.desc
+        }
     }
 
 }
