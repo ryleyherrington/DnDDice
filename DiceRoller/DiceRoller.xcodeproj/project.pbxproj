@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		409811BE20D9C02B00532258 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409811BD20D9C02B00532258 /* Extensions.swift */; };
 		409811C020DACE4B00532258 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409811BF20DACE4B00532258 /* AddEventViewController.swift */; };
+		40AC393C216A6550005905AB /* GameModuleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AC393B216A6550005905AB /* GameModuleController.swift */; };
+		40CC8D5A218D4A2400410949 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC8D59218D4A2400410949 /* CardCell.swift */; };
+		40CC8D5C218D4ACE00410949 /* CardCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC8D5B218D4ACE00410949 /* CardCarouselView.swift */; };
+		40CC8D5E218D4B2B00410949 /* CarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CC8D5D218D4B2B00410949 /* CarouselFlowLayout.swift */; };
 		7353EA4520432C510050865A /* EventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353EA4420432C510050865A /* EventCoordinator.swift */; };
 		7353EA4720432CB40050865A /* TimelineHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353EA4620432CB40050865A /* TimelineHandler.swift */; };
 		7353EA49204384DD0050865A /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353EA48204384DD0050865A /* RootController.swift */; };
@@ -28,6 +32,10 @@
 		1239DA3BF841E2579D59621C /* Pods-DiceRoller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiceRoller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiceRoller/Pods-DiceRoller.debug.xcconfig"; sourceTree = "<group>"; };
 		409811BD20D9C02B00532258 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		409811BF20DACE4B00532258 /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		40AC393B216A6550005905AB /* GameModuleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModuleController.swift; sourceTree = "<group>"; };
+		40CC8D59218D4A2400410949 /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		40CC8D5B218D4ACE00410949 /* CardCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCarouselView.swift; sourceTree = "<group>"; };
+		40CC8D5D218D4B2B00410949 /* CarouselFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFlowLayout.swift; sourceTree = "<group>"; };
 		7353EA4420432C510050865A /* EventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCoordinator.swift; sourceTree = "<group>"; };
 		7353EA4620432CB40050865A /* TimelineHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineHandler.swift; sourceTree = "<group>"; };
 		7353EA48204384DD0050865A /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
@@ -66,13 +74,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		40CC8D58218D231600410949 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		73947E6F2041CEF900906C79 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				73E1CB541DF7C4CC002FD444 /* DiceViewController.swift */,
-				73B4AB672041CD34009F4260 /* HistoryViewController.swift */,
-				73947E7420427FF300906C79 /* GameFinderViewController.swift */,
 				7353EA48204384DD0050865A /* RootController.swift */,
+				73E1CB541DF7C4CC002FD444 /* DiceViewController.swift */,
+				73947E7420427FF300906C79 /* GameFinderViewController.swift */,
+				73B4AB672041CD34009F4260 /* HistoryViewController.swift */,
 				409811BF20DACE4B00532258 /* AddEventViewController.swift */,
 			);
 			path = ViewControllers;
@@ -82,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				7353EA4420432C510050865A /* EventCoordinator.swift */,
+				40AC393B216A6550005905AB /* GameModuleController.swift */,
 				7353EA4620432CB40050865A /* TimelineHandler.swift */,
 			);
 			path = Handlers;
@@ -91,6 +107,9 @@
 			isa = PBXGroup;
 			children = (
 				73947E7120421DDD00906C79 /* EventCell.swift */,
+				40CC8D59218D4A2400410949 /* CardCell.swift */,
+				40CC8D5B218D4ACE00410949 /* CardCarouselView.swift */,
+				40CC8D5D218D4B2B00410949 /* CarouselFlowLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -116,16 +135,17 @@
 		73E1CB511DF7C4CC002FD444 /* DiceRoller */ = {
 			isa = PBXGroup;
 			children = (
+				40CC8D58218D231600410949 /* Theme */,
 				73947E7320421DE500906C79 /* Views */,
 				73947E702041CF0B00906C79 /* Handlers */,
 				73947E6F2041CEF900906C79 /* ViewControllers */,
 				73E1CB521DF7C4CC002FD444 /* AppDelegate.swift */,
+				409811BD20D9C02B00532258 /* Extensions.swift */,
 				73E1CB561DF7C4CC002FD444 /* Main.storyboard */,
 				73E1CB591DF7C4CC002FD444 /* Assets.xcassets */,
 				73E1CB5B1DF7C4CC002FD444 /* LaunchScreen.storyboard */,
 				73E1CB5E1DF7C4CC002FD444 /* Info.plist */,
 				739AA8B41ED211EA00090CCA /* GoogleService-Info.plist */,
-				409811BD20D9C02B00532258 /* Extensions.swift */,
 			);
 			path = DiceRoller;
 			sourceTree = "<group>";
@@ -257,15 +277,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				73947E7220421DDD00906C79 /* EventCell.swift in Sources */,
+				40CC8D5E218D4B2B00410949 /* CarouselFlowLayout.swift in Sources */,
 				409811C020DACE4B00532258 /* AddEventViewController.swift in Sources */,
 				409811BE20D9C02B00532258 /* Extensions.swift in Sources */,
 				73B4AB682041CD34009F4260 /* HistoryViewController.swift in Sources */,
 				7353EA4720432CB40050865A /* TimelineHandler.swift in Sources */,
+				40AC393C216A6550005905AB /* GameModuleController.swift in Sources */,
 				73E1CB551DF7C4CC002FD444 /* DiceViewController.swift in Sources */,
+				40CC8D5C218D4ACE00410949 /* CardCarouselView.swift in Sources */,
 				7353EA4520432C510050865A /* EventCoordinator.swift in Sources */,
 				73E1CB531DF7C4CC002FD444 /* AppDelegate.swift in Sources */,
 				73947E7520427FF300906C79 /* GameFinderViewController.swift in Sources */,
 				7353EA49204384DD0050865A /* RootController.swift in Sources */,
+				40CC8D5A218D4A2400410949 /* CardCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

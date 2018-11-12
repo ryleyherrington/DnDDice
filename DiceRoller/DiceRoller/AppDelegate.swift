@@ -16,7 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        FIRApp.configure()
+        DispatchQueue.main.async {
+           FIRApp.configure()
+        }
 
         //Navigation Bar Appearance
         UINavigationBar.appearance().titleTextAttributes = [

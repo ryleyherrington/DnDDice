@@ -25,14 +25,14 @@ class HistoryViewController: UIViewController {
     
     fileprivate var history: [Event] = []
     fileprivate var name: String?
-    
+
     fileprivate var tableView:UITableView = {
         let tv = UITableView(frame: .zero, style: .grouped)
         tv.allowsSelection = true
         tv.estimatedRowHeight = 120
         return tv
     }()
-    
+
     fileprivate var coordinator: EventCoordinator<TimelineEvent, TimelineState>?
     typealias Dependencies = String //in case we need more later, just send in a tuple (String, String, Int...)
     static func create(deps: Dependencies) -> HistoryViewController {
@@ -55,10 +55,14 @@ class HistoryViewController: UIViewController {
         ref = FIRDatabase.database().reference()
         self.title = "History"
 
+//        setupAltView()
         setupView()
     }
     
-    func setupView() {
+    func setupAltView() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEvent))
+        navigationItem.setRightBarButton(addButton, animated: true)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
@@ -69,6 +73,22 @@ class HistoryViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+
+    func setupView() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addEvent))
+        navigationItem.setRightBarButton(addButton, animated: true)
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
+        tableView.backgroundColor = UIColor.groupTableViewBackground
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -98,32 +118,51 @@ class HistoryViewController: UIViewController {
     func performNavigation(state: TimelineState) {
         guard let navigationState = state.navigation else { return }
         switch navigationState {
-        case .history, .setupGame:
+        case .history, .setupGame(_):
             break
 
-        case let .setupNewEvent(section):
-            print("New event added after section: \(section)")
-
-        case let .insertEvent(section):
-            print(section)
+        case .setupEvent:
             if let timelineName = name {
-                let vc = AddEventViewController.create(insertEventAt: section, history: history, timelineName: timelineName)
-                navigationController?.present(vc, animated: true, completion: nil)
+                let vc = AddEventViewController.create(insertEventAt: -100,
+                                                       history: history,
+                                                       timelineName: timelineName,
+                                                       eventType: .mainEvent)
+                navigationController?.pushViewController(vc, animated: true)
+            }
+
+        case let .setupSubEvent(section):
+            print("New event added after section: \(section)")
+            if let timelineName = name {
+                let vc = AddEventViewController.create(insertEventAt: section,
+                                                       history: history,
+                                                       timelineName: timelineName,
+                                                       eventType: .subEvent)
+                navigationController?.pushViewController(vc, animated: true)
             }
         }
+
     }
     
     func handleError(_ error: TimelineError?) {
         guard let error = error else { return }
-        
+        print(error)
+
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         switch error {
-        case .gameNotFound, .emptyTimelineName:
+        case .emptyTimelineName:
+            alert.title = NSLocalizedString("Empty Timeline", comment: "Title for alert for game/timeline having no events")
+            alert.message = NSLocalizedString("No events found", comment:"Message for no events found")
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"Zero error modal."), style: .default, handler:nil))
+
+        case .gameNotFound:
+            alert.title = NSLocalizedString("Game Not Found", comment: "Title for alert for game/timeline name not  found")
+            alert.message = NSLocalizedString("Error retrieving game, please create a new game if this persists.", comment:"Message for error of game not found")
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"Game not found error modal."), style: .default, handler:nil))
+
+        case .notEnoughInfoFail, .notEnoughInfoSoft, .tooManyCharacters:
             break
         }
-    }
-    
-    @objc func addEvent() {
-        print("Add")
+        navigationController?.present(alert, animated: true, completion: nil)
     }
     
     func getHistory(timelineName: String) {
@@ -150,18 +189,14 @@ class HistoryViewController: UIViewController {
         })
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    @objc func addEvent() {
+        coordinator?.notify(event: .addEvent)
     }
 
     @objc func tappedSection(_ sender:UIButton) {
-        coordinator?.notify(event: .addNewSubEvent(sender.tag))
+        coordinator?.notify(event: .addSubEvent(sender.tag))
     }
 
-    @objc func insertEvent(_ sender: UIButton) {
-        coordinator?.notify(event: .insertEvent(sender.tag))
-    }
-    
 }
 
 extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
@@ -239,27 +274,38 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 54.0
+//        return 54.0
+        return 5.0
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 54) )
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 5.0) )
         footer.backgroundColor = UIColor.groupTableViewBackground
 
-        let addButton = UIButton(type: .custom)
-        addButton.tag = section
-        addButton.setTitle("Add Event", for: .normal)
-        addButton.setTitleColor(UIColor.globalColor, for: .normal)
-        addButton.addTarget(self, action: #selector(insertEvent(_:)), for: .touchUpInside)
-        addButton.layer.cornerRadius = 4
-        addButton.clipsToBounds = true
+        let shadow = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 3) , cornerRadius: 3)
+        footer.layer.masksToBounds = true
+        footer.layer.shadowColor = UIColor.black.cgColor
+        footer.layer.shadowOffset = CGSize(width: 0, height: 0)
+        footer.layer.shadowOpacity = 0.7
+        footer.layer.shadowPath = shadow.cgPath
 
-        footer.addSubview(addButton)
-        addButton.snp.makeConstraints { (make) in
-            make.height.equalTo(44)
-            make.center.equalToSuperview()
-        }
-
+//        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 54) )
+//        footer.backgroundColor = UIColor.groupTableViewBackground
+//
+//        let addButton = UIButton(type: .custom)
+//        addButton.tag = section
+//        addButton.setTitle("Add Sub Event", for: .normal)
+//        addButton.setTitleColor(UIColor.globalColor, for: .normal)
+//        addButton.addTarget(self, action: #selector(insertEvent(_:)), for: .touchUpInside)
+//        addButton.layer.cornerRadius = 4
+//        addButton.clipsToBounds = true
+//
+//        footer.addSubview(addButton)
+//        addButton.snp.makeConstraints { (make) in
+//            make.height.equalTo(44)
+//            make.center.equalToSuperview()
+//        }
+//
         return footer
     }
 }

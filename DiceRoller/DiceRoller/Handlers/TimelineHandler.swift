@@ -11,22 +11,29 @@ import Foundation
 enum ServiceInteraction {
     case checkTimelineExist
     case getHistory
-    case addEvent(String, Int)
-    case addSubEvent(String, Int, Int)
+
+    case addEvent(String, Int) //timelineName, eventIndex
+    case addSubEvent(String, Int, Int, String) //timelineName, insertIndex, childIndex, eventInfo
+
     case removeEvent(Int)
     case removeSubEvent(Int, Int)
+
+    case submitEvent(String, Int, Int, String)
 }
 
 enum TimelineEvent {
     case timelineChosen(String)
-    case timelineExists
-    case timelineNotExists
+    case timelineExistence(Bool)
+
     case createTimeline(String)
-    case addNewSubEvent(Int)
-    case insertEvent(Int)
     case getHistory
-    case addEvent(String, Int)
-    case addSubEvent(String, Int, Int)
+
+    case addEvent
+    case addSubEvent(Int)
+
+    case submitEvent(String, Int)
+    case submitSubEvent(String, Int)
+
     case removeEvent(Int)
     case removeSubEvent(Int, Int)
 }
@@ -34,13 +41,16 @@ enum TimelineEvent {
 enum TimelineError {
     case gameNotFound
     case emptyTimelineName
+    case notEnoughInfoFail
+    case notEnoughInfoSoft
+    case tooManyCharacters
 }
 
 enum TimelineNavigation {
     case history
     case setupGame(String)
-    case setupNewEvent(Int)
-    case insertEvent(Int)
+    case setupEvent
+    case setupSubEvent(Int)
 }
 
 struct TimelineState {
@@ -50,7 +60,7 @@ struct TimelineState {
     var isProcessing: Bool = false
     var events: [Event] = []
     var service: ServiceInteraction?
-    
+
     init() {
         timelineName = nil
         error = nil
@@ -80,30 +90,54 @@ struct TimelineHandler: EventHandler {
                 state.service = .checkTimelineExist
             }
             
-        case .timelineExists:
-            state.navigation = .history
-        
-        case .timelineNotExists:
-            state.error = .gameNotFound
+        case let .timelineExistence(doesExist):
+            if doesExist {
+                state.navigation = .history
+            } else {
+                state.error = .gameNotFound
+            }
         
         case let .createTimeline(timelineName):
             state.navigation = .setupGame(timelineName)
 
-        case let .addNewSubEvent(eventNumber):
-            state.navigation = .setupNewEvent(eventNumber)
-
-        case let .insertEvent(eventNumber):
-            state.navigation = .insertEvent(eventNumber)
-            
         case .getHistory:
             state.service = .getHistory
-            
-        case let .addEvent(name, number):
+
+        case .addEvent:
+            state.navigation = .setupEvent
+
+        case let .addSubEvent(eventNumber):
+            state.navigation = .setupSubEvent(eventNumber)
+
+        case let .submitEvent(name, number):
             state.service = .addEvent(name, number)
-        
-        case let .addSubEvent(name, eventNum, subEventNumber):
-            state.service = .addSubEvent(name, eventNum, subEventNumber)
-        
+
+        case let .submitSubEvent(eventInfo, eventNumber):
+            let insertEventIndex = eventNumber + 1
+            if let timelineName = state.timelineName {
+                if insertEventIndex == -99 || timelineName == "" {
+                    state.error = .notEnoughInfoFail
+                }
+
+                if eventInfo.trimmingCharacters(in: .whitespaces) == "" {
+                    state.error = .notEnoughInfoSoft
+                }
+
+                if eventInfo.count > 200 {
+                    state.error = .tooManyCharacters
+                }
+
+                if state.error == nil {
+                    let childEventIndex = state.events[eventNumber].subEvents.count
+//                    let info = eventInfo.caseInsensitiveCompare("asdf") != .orderedAscending ? "Adding to event:\(eventNumber) and subEvent:\(childEventIndex)" : eventInfo
+
+                    state.service = .addSubEvent(timelineName,
+                                                 insertEventIndex,
+                                                 childEventIndex,
+                                                 eventInfo)
+                }
+            }
+
         case let .removeEvent(eventNum):
             state.service = .removeEvent(eventNum)
         

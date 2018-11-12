@@ -11,12 +11,18 @@ import SnapKit
 import Firebase
 import FirebaseDatabase
 
+enum EventType {
+    case mainEvent
+    case subEvent
+}
+
 class AddEventViewController: UIViewController {
 
     var ref: FIRDatabaseReference!
+    var eventType: EventType = .mainEvent
     private var timelineName: String = ""
     private var history: [Event] = []
-    private var eventNumber: Int = -1
+    private var eventNumber: Int = -100
 
     private var closeButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -35,7 +41,7 @@ class AddEventViewController: UIViewController {
         return label
     }()
 
-    private var textField: UITextField = {
+    private var numberField: UITextField = {
         let tf = UITextField()
         tf.font = UIFont(name: "HelveticaNeue-Light", size: 14)
         tf.layer.borderColor = UIColor.lightGray.cgColor
@@ -46,6 +52,16 @@ class AddEventViewController: UIViewController {
         return tf
     }()
 
+    private var eventInfoField: UITextField = {
+        let tf = UITextField()
+        tf.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+        tf.layer.borderColor = UIColor.lightGray.cgColor
+        tf.layer.borderWidth = 1
+        tf.layer.cornerRadius = 5
+        tf.textAlignment = .center
+        tf.clipsToBounds = true
+        return tf
+    }()
 
     private var addButton: UIButton = {
         let b = UIButton(type: .custom)
@@ -56,15 +72,18 @@ class AddEventViewController: UIViewController {
         return b
     }()
 
-    private var coordinator: EventCoordinator<TimelineEvent, TimelineState>?
-    static func create(insertEventAt eventNum: Int, history: [Event], timelineName: String) -> AddEventViewController {
+    var coordinator: EventCoordinator<TimelineEvent, TimelineState>?
+    static func create(insertEventAt eventNum: Int, history: [Event], timelineName: String, eventType: EventType = .subEvent) -> AddEventViewController {
 
         let vc = AddEventViewController()
         vc.eventNumber = eventNum
-        vc.timelineName = timelineName
         vc.history = history
+        vc.eventType = eventType
 
-        let initialState = TimelineState()
+        var initialState = TimelineState()
+        initialState.events = history
+        initialState.timelineName = timelineName
+
         let coordinator = EventCoordinator(eventHandler: TimelineHandler(), state: initialState)
         vc.coordinator = coordinator
         coordinator.onStateChange = { [weak vc] state in vc?.updateState(state: state) }
@@ -78,30 +97,39 @@ class AddEventViewController: UIViewController {
         ref = FIRDatabase.database().reference()
         self.title = "Add Event"
 
-        setupView()
+        if eventType == .mainEvent {
+            setupEventView()
+        } else {
+            setupSubEventView()
+        }
     }
 
-    func setupView() {
+    override func viewDidAppear(_ animated: Bool) {
+        coordinator?.start()
+    }
+
+    func setupEventView() {
         view.backgroundColor = UIColor.white
 
-        view.addSubview(closeButton)
         view.addSubview(descLabel)
-        view.addSubview(textField)
+        view.addSubview(eventInfoField)
         view.addSubview(addButton)
 
         addButton.setTitle("Add Event", for: .normal)
         addButton.addTarget(self, action: #selector(addEvent), for: .touchUpInside)
 
-        textField.placeholder = "Enter event name"
-        descLabel.text = "Add information to Event: \n\(history[eventNumber].name)"
+        eventInfoField.placeholder = "Enter event name"
+        if let eventName = history[safe: eventNumber]?.name {
+            descLabel.text = "Add information to Event: \n\(eventName)"
+        }
 
         descLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin).offset(10)
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
         }
 
-        textField.snp.makeConstraints { (make) in
+        eventInfoField.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
             make.center.equalToSuperview()
@@ -114,21 +142,52 @@ class AddEventViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-10)
             make.height.equalTo(60)
         }
+    }
 
-        closeButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-15)
-            make.height.equalTo(25)
-            make.width.equalTo(25)
+    func setupSubEventView() {
+        view.backgroundColor = UIColor.white
+
+        view.addSubview(descLabel)
+        view.addSubview(eventInfoField)
+        view.addSubview(addButton)
+
+        addButton.setTitle("Add Event", for: .normal)
+        addButton.addTarget(self, action: #selector(addEvent), for: .touchUpInside)
+
+        eventInfoField.placeholder = "Enter event name"
+        if let eventName = history[safe: eventNumber]?.name {
+            descLabel.text = "Add information to Event: \n\(eventName)"
+        }
+        eventInfoField.delegate = self
+
+        descLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin).offset(10)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
         }
 
+        eventInfoField.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.top.equalTo(descLabel.snp.bottom).offset(10)
+            make.height.equalTo(44)
+        }
+
+        addButton.snp.makeConstraints { (make) in
+//            make.bottom.equalTo(view.snp.bottomMargin).offset(-10)
+            make.top.equalTo(eventInfoField.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.height.equalTo(60)
+        }
     }
 
     @objc func close() {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 
     func updateState(state: TimelineState) {
+        history = state.events
         performService(state: state)
         performNavigation(state: state)
         handleError(state.error)
@@ -141,7 +200,14 @@ class AddEventViewController: UIViewController {
         case .getHistory:
             break
 
-        default: break
+        case let .addEvent(timelineName, eventIndex):
+            addNewEventService(timelineName: timelineName, eventIndex: eventIndex)
+
+        case let .addSubEvent(timelineName, insertIndex, childIndex, eventInfo):
+            addSubEventService(timelineName: timelineName, eventIndex: insertIndex, childEventIndex: childIndex, eventInfo: eventInfo)
+
+        default:
+            break
 
         }
     }
@@ -149,7 +215,8 @@ class AddEventViewController: UIViewController {
     func performNavigation(state: TimelineState) {
         guard let navigationState = state.navigation else { return }
         switch navigationState {
-        case .history, .setupGame, .setupNewEvent(_), .insertEvent(_):
+
+        case .history, .setupGame, .setupEvent, .setupSubEvent(_):
             break
         }
     }
@@ -160,39 +227,53 @@ class AddEventViewController: UIViewController {
         switch error {
         case .gameNotFound, .emptyTimelineName:
             break
+        case .notEnoughInfoFail:
+            print("event was -1 or timeline was empty")
+        case .notEnoughInfoSoft:
+            print("Failed softly")
+        case .tooManyCharacters:
+            print("Too many characters")
         }
     }
 
     @objc func addEvent() {
-        coordinator?.notify(event: .addEvent)
+        if let eventInfo = eventInfoField.text {
+            switch eventType {
+            case .mainEvent:
+                coordinator?.notify(event: .submitEvent(eventInfo, eventNumber))
+
+            case .subEvent:
+                coordinator?.notify(event: .submitSubEvent(eventInfo, eventNumber))
+            }
+        }
     }
 
-    func addSubEventService() {
-        guard eventNumber != -1 && timelineName != "" else { return }
+    func addNewEventService(timelineName: String, eventIndex: Int = -100) {
+        let newEvent = ref.child("Histories").child(timelineName).child("\(eventIndex-1)").child("Name")
+        newEvent.setValue("New event getting inserted")
 
-        let normalizedEventNumber = eventNumber + 1 //this is because we're
-        let childEventNumber = history[eventNumber].subEvents.count  // +1
-        let eventInfo = textField.text != "" ? textField.text : "Adding to event:\(eventNumber) and subEvent:\(childEventNumber)"
-//        if eventInfo?.count > 200 {
-//            coordinator?.notify(event: .inputDescriptionTooLarge)
-//        }
-
-        let example = ref.child("Histories").child(timelineName).child("\(normalizedEventNumber)").child("SubEvents").child("\(childEventNumber)")
-        example.setValue(eventInfo)
+        let newSub = ref.child("Histories").child(timelineName).child("\(eventIndex-1)").child("SubEvents").child("0")
+        newSub.setValue("Example sub event")
 
         close()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    func addSubEventService(timelineName: String, eventIndex: Int, childEventIndex: Int, eventInfo: String) {
+        let newChild = ref.child("Histories").child(timelineName).child("\(eventIndex)").child("SubEvents").child("\(childEventIndex)")
+        newChild.setValue(eventInfo)
+
+        close()
+    }
+}
+
+extension AddEventViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
     }
 
-    @objc func tappedSection(_ sender:UIButton) {
-        coordinator?.notify(event: .addNewSubEvent(sender.tag))
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
     }
-
-    @objc func insertEvent(_ sender: UIButton) {
-        coordinator?.notify(event: .insertEvent(sender.tag))
-    }
-
 }

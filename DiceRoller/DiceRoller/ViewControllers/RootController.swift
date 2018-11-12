@@ -15,7 +15,7 @@ class RootController: UITabBarController {
         view.backgroundColor = UIColor.white
 
         //Timeline portion
-        let gameVC = GameFinderViewController()
+        let gameVC = GameFinderViewController.create()
         gameVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         let gameNavController = UINavigationController(rootViewController: gameVC)
         gameNavController.navigationItem.title = "Timeline"

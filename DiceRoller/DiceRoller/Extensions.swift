@@ -19,7 +19,8 @@ public extension Collection {
 
 //MARK: - Global Color
 public extension UIColor {
-    public static let globalColor = UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
+    //UIColor(red: 56/255, green: 114/255, blue: 180/255, alpha: 1.0)
+    public static let globalColor = UIColor(hex: "#3872B4")
 
     public convenience init(hex: String) {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
